@@ -11,8 +11,6 @@ Below is an example of a program that learns to differentiate between pictures o
 ```python
 import bayan as b
 
-b.assign('Cat','Dog') #Assign Cat to category one, an Dog to category two
-
 f = b.getfile('https://www.example.com/cat1.jpg') #Get file from URL and string it.
 b.train(1,f) #Train cat1.jpg to slot 1
 
@@ -28,3 +26,13 @@ print(result) #Returns '1' for Cat
 ```
 Of course, you must provide it with more exmples.
 ## Advanced Options
+#### Assigning Categories:
+```python
+b.assign('Cat','Dog') #Assign Cat to category one, an Dog to category two
+```
+#### Changing precision
+```python
+b.precision(30)
+#Default value is 300
+```
+The higher the number, the more precise. Lower numbers are more inaccurate, but high numbers are too specific.
