@@ -4,9 +4,9 @@ Bayan is a small simple Python module to analyze files and strings.
 
 ## Example
 
-Below is an example of a program that learns to differentiate between cats and dogs.
+Below is an example of a program that learns to differentiate between pictures of cats and dogs.
 
-**It is assumed tat you have downloaded bayan.py in the same diectory as your program.**
+**It is assumed that you have downloaded bayan.py in the same diectory as your program.**
 
 ```python
 import bayan as b
