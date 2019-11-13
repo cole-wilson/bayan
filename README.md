@@ -30,9 +30,9 @@ Of course, you must provide it with more exmples.
 ```python
 b.assign('Cat','Dog') #Assign Cat to category one, an Dog to category two
 ```
-#### Changing precision
+#### Changing precision:
 ```python
 b.precision(30)
 #Default value is 300
 ```
-The higher the number, the more precise. Lower numbers are more inaccurate, but high numbers are too specific.
+*The higher the number, the more precise. Lower numbers are more inaccurate, but high numbers are too specific.*
