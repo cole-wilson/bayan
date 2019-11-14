@@ -19,8 +19,8 @@ def getfile(url,p = prec):
 
   encodedstring = str(encodedstring)
 
-  encodedstring = ' '.join([encodedstring[i:i+2] for i in range(0, len(encodedstring), prec)])
-
+  encodedstring = ' '.join([encodedstring[i:i+2] for i in range(0, len(encodedstring), 300)])
+  print(encodedstring)
   return encodedstring
 
 def train(category,string):
@@ -74,8 +74,8 @@ def analyze(string):
       catBtotal = catBtotal + catB[totest[x]]
       
   if catBtotal > catAtotal:
-    return 2
+    print( s2)
   elif catAtotal > catBtotal:
-    return 1
+    print(s1)
   else:
-    return 0
+    return 'Error b-a diff:' + str(catBtotal - catAtotal)
