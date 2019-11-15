@@ -1,81 +1,64 @@
-catAl = []
-catBl = []
+import requests,base64
 
-catA = {}
-catB = {}
+d = {}
 
-prec = 300
+session_name = ''
+filename = 'bayan_tmp'
+precision = 300
+deb = False
 
-import  base64
-import requests
+def init(cats,debug=False,save=True):
+  for x in cats:
+    add_cat(x)
+  
 
-def getfile(url,p = prec):
-  name = 'bayan_tmp'
+def train(f,cat):
+  f = f.split(' ')
+  for x in f:
+    if x in d[cat].keys():
+      d[cat][x] = d[cat][x]+1
+    else:
+      d[cat][x] = 1
+
+
+def add_cat(m):
+  d[m] = {}
+
+def get_file(url):
   r = requests.get(url, allow_redirects=True)
-  open(name, 'wb').write(r.content)
+  open(filename, 'wb').write(r.content)
 
-  with open(name, "rb") as image_file:
+  with open(filename, "rb") as image_file:
       encodedstring = base64.b64encode(image_file.read ())
 
   encodedstring = str(encodedstring)
 
-  encodedstring = ' '.join([encodedstring[i:i+2] for i in range(0, len(encodedstring), 300)])
-  print(encodedstring)
+  encodedstring = ' '.join([encodedstring[i:i+precision] for i in range(0, len(encodedstring))])
+  #print(encodedstring)
   return encodedstring
 
-def train(category,string):
-  text = []
-  text=string.split()
-  catltype = category
-  for x in range(len(text)):
-    if catltype == 2:
-      catBl.append(text[x])
-    elif catltype == 1:
-      catAl.append(text[x])
-  
-  for x in range(len(catAl)):
-    catA[catAl[x]] = 0
+def analyze(f):
+  totest = f.split()
 
-  for x in range(len(catBl)):
-    catB[catBl[x]] = 0
+  totals = {}
+  for cat in d:
+    for x in totest:
+      if x in d[cat]:
+        totals[cat] = 0
 
-  for x in range(len(catAl)):
-    catA[catAl[x]] = catA[catAl[x]] + 1
+  for cat in d:
+    for x in totest:
+      if x in d[cat]:
+        totals[cat] = d[cat][x] + totals[cat]
+  #print(totals)
 
-  for x in range(len(catBl)):
-    catB[catBl[x]] = catB[catBl[x]] + 1
+  m = ''
+  mn = 0
 
-
-
-def precision(p):
-  global prec 
-  prec= p
-
-
-
-def assign(s1v,s2v):
-  global s1
-  s1 = s1v
-  global s2 
-  s2 = s2v
-
-def analyze(string):
-  totest = string
-  totest = totest.split()
-
-  catAtotal = 0 
-  for x in range(len(totest)):
-    if totest[x] in catA:
-      catAtotal = catAtotal + catA[totest[x]]
-
-  catBtotal = 0 
-  for x in range(len(totest)):
-    if totest[x] in catB:
-      catBtotal = catBtotal + catB[totest[x]]
-      
-  if catBtotal > catAtotal:
-    print( s2)
-  elif catAtotal > catBtotal:
-    print(s1)
-  else:
-    return 'Error b-a diff:' + str(catBtotal - catAtotal)
+  for x in totals.keys():
+    if totals[x] > mn:
+      m = x
+      mn = totals[x]
+    elif totals[x] == mn:
+      m = m + ' or ' + x
+  return m
