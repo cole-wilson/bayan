@@ -24,7 +24,7 @@ b.train(f,'dog') #Train dog1.jpg to slot 2
 f = b.getfile('https://www.example.com/cat2.jpg')#Get file to test.
 result = b.analyze(f)
 
-print(result) #Returns '1' for Cat
+print(result) #Returns 'cat'
 ```
 Of course, you must provide it with more exmples.
 ## Advanced Options
